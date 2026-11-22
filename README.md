@@ -19,24 +19,20 @@
    не будет, а сторонние скрипты будут скачиваться у авторов; при выходе у
    автора новой версии проверка sha256 её не пропустит, и пункт перестанет
    работать, пока вы не обновите копию.
-3. Репозиторий закрытый, поэтому серверам нужен токен на чтение. Создайте
-   на GitHub: Settings → Developer settings → Personal access tokens →
-   Fine-grained tokens → Generate new token. Repository access — только этот
-   репозиторий, Permissions → Contents: Read-only. Токен вводится при первом
-   запуске (см. ниже), скрипт сохраняет его в `/etc/tovinodemaker/github-token`
-   (права 600) и дальше берёт оттуда. В файлы репозитория токен не пишите.
+3. Репозиторий публичный: ключи, токены и пароли в его файлы не пишите —
+   они станут видны всем и останутся в истории git. Если репозиторий снова
+   сделать закрытым, серверам понадобится токен на чтение (fine-grained,
+   Contents: Read-only): передайте его при первом запуске переменной
+   `TOVI_GITHUB_TOKEN` — скрипт сохранит его в
+   `/etc/tovinodemaker/github-token` (права 600) и дальше будет брать оттуда.
 4. По желанию — впишите свои SSH-ключи в `DEFAULT_SSH_KEYS`. Тогда блок
    «SSH-ключи» ставит их без вопросов; иначе спрашивает при запуске.
 
 ## Запуск на сервере
 
 ```bash
-read -rsp 'Токен: ' TOVI_GITHUB_TOKEN && export TOVI_GITHUB_TOKEN && curl -fsSL -K <(printf 'header = "Authorization: token %s"\n' "$TOVI_GITHUB_TOKEN") https://raw.githubusercontent.com/Vovunia/ToviNodeMaker/main/tovinodemaker | sudo --preserve-env=TOVI_GITHUB_TOKEN python3
+curl -fsSL https://raw.githubusercontent.com/Vovunia/ToviNodeMaker/main/tovinodemaker | sudo python3
 ```
-
-Команда спрашивает токен скрыто и не показывает его в `ps` и истории
-команд. Если токен отозван или истёк — запустите эту же команду с новым
-токеном, он перезапишет сохранённый.
 
 После первого запуска скрипт ставит себя командами `tovi`, `tovinode` и
 `tovinodemaker`.

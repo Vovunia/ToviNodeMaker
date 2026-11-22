@@ -3,8 +3,8 @@
 """
 tovinodemaker — настройка сервера под ноду Remnawave.
 
-Команда запуска (репозиторий закрытый, нужен токен — см. README):
-read -rsp 'Токен: ' TOVI_GITHUB_TOKEN && export TOVI_GITHUB_TOKEN && curl -fsSL -K <(printf 'header = "Authorization: token %s"\n' "$TOVI_GITHUB_TOKEN") https://raw.githubusercontent.com/Vovunia/ToviNodeMaker/main/tovinodemaker | sudo --preserve-env=TOVI_GITHUB_TOKEN python3
+Команда запуска:
+curl -fsSL https://raw.githubusercontent.com/Vovunia/ToviNodeMaker/main/tovinodemaker | sudo python3
 
 После первого запуска скрипт ставит себя командами tovi, tovinode и
 tovinodemaker. Чтобы он сам обновлялся из вашего репозитория, впишите адрес в
